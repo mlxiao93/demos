@@ -6,6 +6,10 @@ $headerHeight: 46px;
 $asideWidth: 240px;
 $asideTransitionDuration: .3s;
 
+[v-cloak] {
+  display: none !important;
+}
+
 .app-container {
 
   height: 100vh;
