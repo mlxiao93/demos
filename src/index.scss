@@ -125,7 +125,26 @@ $asideTransitionDuration: .3s;
 }
 
 .search-result-panel {
-
+  &__header {
+   height: $headerHeight;
+   display: flex;
+   align-items: center;
+   box-sizing: border-box;
+   padding: .5em 1em;
+   color: #666;
+   i {
+     position: relative;
+     top: 1px;
+     padding: .5em;
+     padding-left: 0;
+     padding-right: 1em;
+     color: #ccc;
+     cursor: pointer;
+     &:hover {
+       color: #444;
+     }
+   }
+  }
 }
 
 .app-header {
@@ -270,7 +289,7 @@ $asideTransitionDuration: .3s;
     font-size: 15px;
     height: 100%;
     padding: 0;
-    margin: 0 4px;
+    margin: 0 6px;
     margin-top: 1px;
     min-width: 0;
   }

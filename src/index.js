@@ -10,7 +10,10 @@ new Vue({
     demoList: demoList,
     activeDemo: null,
     iframeLoading: false,
-    keywords: ''
+    keywords: '',
+    searchPanel: {
+      show: false
+    }
   },
   methods: {
     toggleAppAside: function(value) {
@@ -34,8 +37,14 @@ new Vue({
       let entry = location.hash.replace('#/', '');
       this.activeDemo = demoList.find(demo => demo.entry === entry) || demoList[0];
     },
+    inputMouseDown: function() {
+      this.searchPanel.show = true;
+    },
     clearKeywords: function() {
       this.keywords = '';
+    },
+    clothesSearchPanel: function () {
+      this.searchPanel.show = false;
     }
   },
   computed: {
@@ -61,6 +70,9 @@ new Vue({
         list.push(item);
       });
       return list;
+    },
+    showSearchPanel: function() {
+      return this.searchPanel.show && this.keywords;
     }
   },
   created: function() {
