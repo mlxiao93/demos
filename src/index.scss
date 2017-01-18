@@ -100,13 +100,21 @@ $asideTransitionDuration: .3s;
 
     overflow: hidden;
 
-    transition: width .2s linear,
-                height .2s linear,
-                background .2s,
-                opcity .2s,
-                border-radius .2s .1s linear;
+    $duration: .2s;
+    transition: width $duration linear,
+                height $duration linear,
+                background $duration,
+                opacity $duration,
+                border-radius $duration linear;
 
     &--show {
+
+      transition: width $duration linear,
+                  height $duration linear,
+                  background $duration,
+                  opacity $duration,
+                  border-radius $duration .1s linear;
+
       width: 100%;
       height: 100%;
       border-radius: 0;
