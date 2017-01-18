@@ -1,5 +1,8 @@
 import './index.scss'
 import 'babel-polyfill'
+
+import './index/search-result-panel'
+
 import demoList from '../demo-list'
 
 new Vue({
@@ -43,7 +46,7 @@ new Vue({
     clearKeywords: function() {
       this.keywords = '';
     },
-    clothesSearchPanel: function () {
+    closeSearchPanel: function () {
       this.searchPanel.show = false;
     }
   },
@@ -81,6 +84,6 @@ new Vue({
     };
     window.onhashchange = () => {
       this._findDemo();
-    }
+    };
   }
 });

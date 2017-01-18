@@ -36,7 +36,7 @@
               </li>
               <li v-else class="side-nav__item">
                 <a class="side-nav__link"
-                   @click="clothesSearchPanel"
+                   @click="closeSearchPanel"
                    :class="{
                      'side-nav__link--active': isDemoActived(demo)
                    }"
@@ -78,17 +78,22 @@
         <iframe @load="iframeOnload" :src="demoSrc"></iframe>
       </article>
 
-      <aside class="app-main__search-result-panel search-result-panel"
-             :class="{'app-main__search-result-panel--show': showSearchPanel}">
-        <header class="search-result-panel__header">
-          <i @click="clothesSearchPanel"
-             class="fa fa-times-circle"></i>
-          <span>search results：</span>
-        </header>
-        <article class="search-result-panel--content">
-          <p>Come on, we need more demos!</p>
-        </article>
-      </aside>
+      <aside class="abc"
+             is="search-result-panel"
+             :show-search-panel="showSearchPanel"
+             v-on:close-search-panel="closeSearchPanel"></aside>
+
+      <!--<aside class="app-main__search-result-panel search-result-panel"-->
+             <!--:class="{'app-main__search-result-panel&#45;&#45;show': showSearchPanel}">-->
+        <!--<header class="search-result-panel__header">-->
+          <!--<i @click="closeSearchPanel"-->
+             <!--class="fa fa-times-circle"></i>-->
+          <!--<span>search results：</span>-->
+        <!--</header>-->
+        <!--<article class="search-result-panel&#45;&#45;content">-->
+          <!--<p>Come on, we need more demos!</p>-->
+        <!--</article>-->
+      <!--</aside>-->
 
     </main>
   </div>
