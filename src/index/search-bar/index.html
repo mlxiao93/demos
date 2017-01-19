@@ -1,0 +1,9 @@
+<div class="search-bar" @click.stop>
+  <i class="fa fa-search search-bar__icon search-bar__icon--search"></i>
+  <input :value="value"
+         @input="updateValue($event.target.value)"
+         @mousedown="inputMouseDown"
+         class="search-bar__input" type="text"
+         placeholder="Search">
+  <i v-show="value" @click="clearKeywords" class="fa fa-times search-bar__icon search-bar__icon--clear"></i>
+</div>

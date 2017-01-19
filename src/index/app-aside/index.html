@@ -7,30 +7,6 @@
        @click="toggleAppAside(false)">
   <div class="app-aside__content"
        :class="{'app-aside__content--with-search-panel': showSearchPanel}">
-    <div class="search-bar" @click.stop>
-      <i class="fa fa-search search-bar__icon search-bar__icon--search"></i>
-      <input v-model="keywords"
-             @mousedown="inputMouseDown"
-             class="search-bar__input" type="text"
-             placeholder="Search">
-      <i v-show="keywords" @click="clearKeywords" class="fa fa-times search-bar__icon search-bar__icon--clear"></i>
-    </div>
-    <nav class="side-nav">
-      <ul class="side-nav__list">
-        <template v-for="demo in navList">
-          <li v-if="demo.isGroup" class="side-nav__item-group">
-            {{demo.title}}
-          </li>
-          <li v-else class="side-nav__item">
-            <a class="side-nav__link"
-               @click="closeSearchPanel"
-               :class="{
-                     'side-nav__link--active': isDemoActived(demo)
-                   }"
-               :href="'#/' + demo.entry">{{demo.title}}</a>
-          </li>
-        </template>
-      </ul>
-    </nav>
+    <slot></slot>
   </div>
 </aside>

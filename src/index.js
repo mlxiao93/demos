@@ -2,6 +2,10 @@ import './index.scss'
 import 'babel-polyfill'
 
 import './index/search-result-panel'
+import './index/app-aside'
+import './index/search-bar'
+import './index/side-nav'
+import './index/app-header'
 
 import demoList from '../demo-list'
 
@@ -29,12 +33,6 @@ new Vue({
     },
     iframeOnload: function() {
       this.iframeLoading = false;
-    },
-    isDemoActived: function(demo) {
-      if (!demo) return false;
-      if (!this.activeDemo) return false;
-      if (demo.entry !== this.activeDemo.entry) return false;
-      return true;
     },
     _findDemo: function() {
       let entry = location.hash.replace('#/', '');

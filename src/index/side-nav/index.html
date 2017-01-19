@@ -1,0 +1,17 @@
+<nav class="side-nav">
+  <ul class="side-nav__list">
+    <template v-for="item in navList">
+      <li v-if="item.isGroup" class="side-nav__item-group">
+        {{item.title}}
+      </li>
+      <li v-else class="side-nav__item">
+        <a class="side-nav__link"
+           @click="closeSearchPanel"
+           :class="{
+                     'side-nav__link--active': isItemActivated(item)
+                   }"
+           :href="'#/' + item.entry">{{item.title}}</a>
+      </li>
+    </template>
+  </ul>
+</nav>

@@ -1,0 +1,23 @@
+<header class="app-main__header app-header">
+  <div class="app-header__menu-trigger"
+       :class="{
+                'app-header__menu-trigger--arrow': !hideAppAsideOnDesktop
+              }"
+       @click="toggleAppAside()">
+    <span></span>
+  </div>
+  <div class="app-header__title">
+    <h4 v-cloak>
+      {{activeDemo && activeDemo.title}}
+      <i v-show="iframeLoading" class="app-header__loading-spinner"></i>
+    </h4>
+  </div>
+  <div>
+    <a href="https://github.com/mlxiao93/demos" target="_blank" class="app-header__link">
+      <i class="fa fa-github"></i>
+    </a>
+    <a :href="demoSrc" class="app-header__link">
+      <i class="fa fa-expand"></i>
+    </a>
+  </div>
+</header>
