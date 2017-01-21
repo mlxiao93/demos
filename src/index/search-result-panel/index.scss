@@ -1,0 +1,28 @@
+@import "../vars";
+@import "../../mixin";
+@import "../../nicescroll";
+
+.search-result-panel {
+  &__header {
+    height: $headerHeight;
+    box-sizing: border-box;
+    padding: .5em 1em;
+    color: #666;
+    overflow: hidden;
+    white-space: nowrap;
+    i {
+      position: relative;
+      padding: .5em;
+      padding-left: 0;
+      color: #ccc;
+      cursor: pointer;
+      &:hover {
+        color: #444;
+      }
+    }
+  }
+  &--content {
+    padding-top: 30vh;
+    text-align: center;
+  }
+}

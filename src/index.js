@@ -1,4 +1,5 @@
 import './index.scss'
+import './index/main.scss'
 import 'babel-polyfill'
 
 import './index/search-result-panel'

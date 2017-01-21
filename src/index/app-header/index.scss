@@ -1,0 +1,152 @@
+@import "../vars";
+@import "../../mixin";
+
+.app-header {
+  &__menu-trigger {
+
+    display: flex;
+    cursor: pointer;
+    position: relative;
+    width: 1.1em;
+    height: 1em;
+
+    border: 6px solid transparent;
+    border-left: 0;
+
+
+    justify-content: center;
+    align-items: center;
+    >span {
+      width: 100%;
+      height: 2px;
+      background: #ccc;
+      transition: all $asideTransitionDuration;
+    }
+
+    &:hover {
+      //background-image: linear-gradient(#444, #444);
+      >span {
+        background: #444;
+      }
+      &::before,&::after {
+        border-color: #444;
+      }
+    }
+
+    &::before,&::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      transform-origin: 0;
+      border-color: #ccc;
+      border-style: solid;
+      transition: all $asideTransitionDuration;
+    }
+    &::before {
+      top: 0;
+      border-bottom: 2px;
+    }
+    &::after {
+      bottom: 0;
+      border-top: 2px;
+    }
+
+    /*arrow样式*/
+    &--arrow {
+      width: .9em;
+      &::before, &::after {
+        border-width: 2px;
+        right: 36%;
+      }
+      &::before {
+        top: 50%;
+        transform: rotate(-45deg) translateY(-50%);
+      }
+      &::after {
+        bottom: 50%;
+        transform: rotate(45deg) translateY(50%);
+      }
+    }
+  }
+
+  &__title {
+    flex: 1;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    color: #444;
+    padding: 0 1em;
+    h4 {
+      position: relative;
+      min-height: 1em;
+    };
+  }
+
+  @keyframes loading {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+      border-top-color: #7fc4d1;
+      border-right-color: #7fc4d1;
+    }
+    50% {
+      border-top-color: #1f4f58;
+      border-right-color: #1f4f58;
+    }
+    100% {
+      -webkit-transform: rotate(720deg);
+      transform: rotate(720deg);
+      border-top-color: #7fc4d1;
+      border-right-color: #7fc4d1;
+    }
+  }
+
+  &__loading-spinner {
+    margin: 0;
+    right: -1.1em;
+    top: 3px;
+    position: absolute;
+    animation: loading 2s infinite linear;
+    color: #ccc;
+    display: inline-block;
+    width: .5em;
+    height: .5em;
+
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0);
+    border-top-color: #7fc4d1;
+    border-right-color: #7fc4d1;
+  }
+
+  &__link {
+    color: #ccc;
+    &:hover {
+      color: #444;
+    }
+    &:not(:last-child) {
+      margin-right: .6em;
+    }
+  }
+}
+
+@include for-phone-only {
+  @import "../vars.mobile";
+
+  .app-header {
+    &__menu-trigger {
+      width: 1.1em;
+      &::before, &::after{
+        transform: none;
+        right: 0;
+      }
+      &::before {
+        top: 0;
+      }
+      &::after {
+        bottom: 0;
+      }
+    }
+  }
+}

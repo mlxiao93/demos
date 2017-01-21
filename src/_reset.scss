@@ -12,3 +12,7 @@ ul {
 iframe {
   border: none;
 }
+
+[v-cloak] {
+  display: none !important;
+}

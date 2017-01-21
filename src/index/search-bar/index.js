@@ -1,3 +1,5 @@
+import './index.scss'
+
 export default Vue.component('search-bar', {
   template: require('./index.html'),
   props: ['value'],

@@ -1,3 +1,5 @@
+import './index.scss'
+
 export default Vue.component('side-nav', {
   template: require('./index.html'),
   props: {

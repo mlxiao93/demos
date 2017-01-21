@@ -1,0 +1,68 @@
+@import "vars";
+@import "../mixin";
+
+.app-main {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  &__header {
+    height: $headerHeight;
+    display: flex;
+    align-items: center;
+    padding: .5em 1em;
+    box-sizing: border-box;
+  }
+  &__article {
+    flex: 1;
+    padding: .5em 1em;
+  }
+  &__search-result-panel {
+
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: 0;
+    height: 0;
+    border-bottom-right-radius: 100%;
+
+    background: #fff;
+    opacity: 0;
+
+    overflow: hidden;
+
+    $duration: .2s;
+    transition: width $duration linear,
+    height $duration linear,
+    background $duration,
+    opacity $duration,
+    border-radius $duration linear;
+
+    &--show {
+
+      transition: width $duration linear,
+      height $duration linear,
+      background $duration,
+      opacity $duration,
+      border-radius $duration .1s linear;
+
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+      background: #fafafa;
+      opacity: 1;
+    }
+  }
+}
+
+@include for-phone-only {
+
+  .app-main {
+    &__search-result-panel {
+      top: $headerHeight;
+      bottom: 0;
+      height: auto;
+      z-index: 101;
+    }
+  }
+}

@@ -1,3 +1,5 @@
+import './index.scss'
+
 export default Vue.component('app-header', {
   template: require('./index.html'),
   props: [
