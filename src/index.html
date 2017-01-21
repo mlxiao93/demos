@@ -11,16 +11,18 @@
 <body>
   <div id="app" class="app-container">
 
-    <app-aside
-           :hide-app-aside-on-desktop="hideAppAsideOnDesktop"
-           :show-app-aside-on-mobile="showAppAsideOnMobile"
-           :show-search-panel="showSearchPanel"
-           @toggle-app-aside="toggleAppAside">
+    <app-aside class="app-container__aside"
+               :class="{
+                 'app-container__aside--hide-on-desktop': hideAppAsideOnDesktop,
+                 'app-container__aside--show-on-mobile': showAppAsideOnMobile,
+                 'app-container__aside--with-search-panel': showSearchPanel
+               }"
+               :with-search-panel="showSearchPanel"
+               @toggle="toggleAppAside">
 
-      <search-bar
-           v-model="keywords"
-           @input-mouse-down="inputMouseDown"
-           @clear-keywords="clearKeywords" ></search-bar>
+      <search-bar v-model="keywords"
+                  @input-mouse-down="inputMouseDown"
+                  @clear-keywords="clearKeywords" ></search-bar>
 
       <side-nav :nav-list="navList"
                 :active-item="activeDemo"
@@ -30,7 +32,8 @@
 
     <main class="app-container__main app-main">
 
-      <app-header :hide-app-aside-on-desktop="hideAppAsideOnDesktop"
+      <app-header class="app-main__header"
+                  :hide-app-aside-on-desktop="hideAppAsideOnDesktop"
                   :active-demo="activeDemo"
                   :iframe-loading="iframeLoading"
                   :demo-src="demoSrc"
@@ -40,9 +43,9 @@
         <iframe @load="iframeOnload" :src="demoSrc"></iframe>
       </article>
 
-      <search-result-panel
-             :show-search-panel="showSearchPanel"
-             @close-search-panel="closeSearchPanel"></search-result-panel>
+      <search-result-panel class="app-main__search-result-panel"
+                           :show-search-panel="showSearchPanel"
+                           @close-search-panel="closeSearchPanel"></search-result-panel>
 
     </main>
 

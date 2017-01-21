@@ -1,12 +1,7 @@
-<aside class="app-container__aside app-aside"
-       :class="{
-            'app-container__aside--hide-on-desktop': hideAppAsideOnDesktop,
-            'app-container__aside--show-on-mobile': showAppAsideOnMobile,
-            'app-container__aside--with-search-panel': showSearchPanel
-           }"
+<aside class="app-aside"
        @click="toggleAppAside(false)">
   <div class="app-aside__content"
-       :class="{'app-aside__content--with-search-panel': showSearchPanel}">
+       :class="{'app-aside__content--with-search-panel': withSearchPanel}">
     <slot></slot>
   </div>
 </aside>
