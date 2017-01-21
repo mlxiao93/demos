@@ -10,7 +10,11 @@ import './index/app-header'
 
 import demoList from '../demo-list'
 
-new Vue({
+export const events = {
+  toggleAppAside: 'toggle-app-aside'
+};
+
+export default new Vue({
   el: '#app',
   data: {
     hideAppAsideOnDesktop: false,
@@ -78,6 +82,11 @@ new Vue({
     }
   },
   created: function() {
+    this.$on(events.toggleAppAside, value => {
+      this.toggleAppAside(value);
+    });
+
+
     window.onload = () => {
       this._findDemo();
     };

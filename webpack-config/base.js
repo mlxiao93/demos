@@ -32,7 +32,7 @@ module.exports = {
   resolve: {
     extensions: ['', '.js'],
     alias: {
-      src: './../src'
+      src: path.resolve(__dirname, './../src')
     }
   },
   // plugins: [

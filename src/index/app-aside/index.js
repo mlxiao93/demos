@@ -1,4 +1,6 @@
 import './index.scss'
+import bus from 'src/index'
+import {events} from 'src/index'
 
 export default Vue.component('app-aside', {
   template: require('./index.html'),
@@ -7,7 +9,7 @@ export default Vue.component('app-aside', {
   },
   methods: {
     toggleAppAside: function(value) {
-      this.$emit('toggle', value)
+      bus.$emit(events.toggleAppAside, value);
     }
   }
 });

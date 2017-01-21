@@ -17,8 +17,7 @@
                  'app-container__aside--show-on-mobile': showAppAsideOnMobile,
                  'app-container__aside--with-search-panel': showSearchPanel
                }"
-               :with-search-panel="showSearchPanel"
-               @toggle="toggleAppAside">
+               :with-search-panel="showSearchPanel">
 
       <search-bar v-model="keywords"
                   @input-mouse-down="inputMouseDown"

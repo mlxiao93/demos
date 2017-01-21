@@ -1,8 +1,8 @@
+const path = require('path');
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 
 const base = require('./base');
-
 
 module.exports = webpackMerge(base, {
   output: {
@@ -20,7 +20,7 @@ module.exports = webpackMerge(base, {
   },
   resolve: {
     alias: {
-      config: './../src/dev.config.js',
+      config: path.resolve(__dirname, './../src/dev.config.js')
     }
   }
 });

@@ -40,7 +40,7 @@ module.exports = webpackMerge(base, {
   ],
   resolve: {
     alias: {
-      config: './../src/prod.config.js',
+      config: path.resolve(__dirname, './../src/prod.config.js'),
     }
   }
 });
