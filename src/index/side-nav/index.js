@@ -1,4 +1,6 @@
 import './index.scss'
+import bus from '../../index'
+import {events} from '../../index'
 
 export default Vue.component('side-nav', {
   template: require('./index.html'),
@@ -15,7 +17,7 @@ export default Vue.component('side-nav', {
     },
 
     closeSearchPanel: function() {
-      this.$emit('close-search-panel');
+      bus.$emit(events.closeSearchPanel);
     }
   }
 })

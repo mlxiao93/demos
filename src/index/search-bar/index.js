@@ -1,4 +1,6 @@
 import './index.scss'
+import bus from '../../index'
+import {events} from '../../index'
 
 export default Vue.component('search-bar', {
   template: require('./index.html'),
@@ -8,10 +10,10 @@ export default Vue.component('search-bar', {
       this.$emit('input', value);
     },
     inputMouseDown: function () {
-      this.$emit('input-mouse-down');
+      bus.$emit(events.inputMouseDown);
     },
     clearKeywords: function () {
-      this.$emit('clear-keywords');
+      this.updateValue('');
     }
   }
 })

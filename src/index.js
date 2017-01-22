@@ -11,7 +11,9 @@ import './index/app-header'
 import demoList from '../demo-list'
 
 export const events = {
-  toggleAppAside: 'toggle-app-aside'
+  toggleAppAside: 'toggle-app-aside',
+  inputMouseDown: 'input-mouse-down',
+  closeSearchPanel: 'close-search-panel'
 };
 
 export default new Vue({
@@ -45,9 +47,6 @@ export default new Vue({
     },
     inputMouseDown: function() {
       this.searchPanel.show = true;
-    },
-    clearKeywords: function() {
-      this.keywords = '';
     },
     closeSearchPanel: function () {
       this.searchPanel.show = false;
@@ -85,7 +84,12 @@ export default new Vue({
     this.$on(events.toggleAppAside, value => {
       this.toggleAppAside(value);
     });
-
+    this.$on(events.inputMouseDown, () => {
+      this.inputMouseDown();
+    });
+    this.$on(events.closeSearchPanel, () => {
+      this.closeSearchPanel();
+    });
 
     window.onload = () => {
       this._findDemo();
