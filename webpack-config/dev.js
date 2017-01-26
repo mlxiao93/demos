@@ -10,11 +10,26 @@ module.exports = webpackMerge(base, {
   },
   devtool: 'eval-source-map',
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.scss$/,
-        exclude: /node_modules/,
-        loader: 'style!css?sourceMap!postcss!sass?sourceMap'
+        exclude: [/node_modules/],
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          'postcss-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true
+            }
+          }
+        ]
       }
     ]
   },

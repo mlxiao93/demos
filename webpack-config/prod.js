@@ -13,11 +13,14 @@ module.exports = webpackMerge(base, {
     path: process.cwd() + '/dist'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.scss$/,
-        exclude: /node_modules/,
-        loader: ExtractTextPlugin.extract('style', 'css!postcss!sass')    //将css从js中独立出来
+        exclude: [/node_modules/],
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader',
+          loader: ['css-loader?minimize', 'postcss-loader', 'sass-loader']
+        })
       }
     ]
   },
@@ -30,7 +33,9 @@ module.exports = webpackMerge(base, {
         comments: false
       }
     }),
-    new ExtractTextPlugin("[name]/bundle.[chunkhash].css"),
+    new ExtractTextPlugin({
+      filename: "[name]/bundle.[chunkhash].css"
+    }),
     // new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.[chunkhash].js"),
 
     new CleanWebpackPlugin(['dist'], {

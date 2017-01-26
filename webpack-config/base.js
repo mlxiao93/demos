@@ -30,7 +30,7 @@ module.exports = {
   // },
   entry: entry,
   resolve: {
-    extensions: ['', '.js'],
+    extensions: ['.js'],
     alias: {
       src: path.resolve(__dirname, './../src')
     }
@@ -50,24 +50,28 @@ module.exports = {
   // ],
   plugins: plugins,
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
-        loaders: ['babel']
+        exclude: [/node_modules/],
+        loader: 'babel-loader'
       },
       {
         test: /\.html$/,
-        loader: 'html',
-        query: {
+        loader: 'html-loader',
+        options: {
           minimize: true
         }
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        loaders: [
-          'url?limit=10000&hash=sha512&digest=hex&name=img/[hash].[ext]'
-        ]
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          hash: 'sha512',
+          digest: 'hex',
+          name: 'img/[hash].[ext]'
+        }
       }
     ]
   },
