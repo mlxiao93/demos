@@ -1,0 +1,27 @@
+#demo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 150px;
+}
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  width: 150px;
+  margin-bottom: 1em;
+}
+
+.item {
+  display: flex;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ccc;
+}
+
+.list-move {
+  transition: all 1s;
+}

@@ -6,7 +6,7 @@ const demos = require('../demo-list');
 let entry = {
   index: process.cwd() + '/src/index.js',
 };
-let plugins = [
+let htmlWebpackPlugins = [
   new HtmlWebpackPlugin({
     filename: 'index.html',
     chunks: ['index'],
@@ -16,7 +16,7 @@ let plugins = [
 ];
 demos.map(demo => {
   entry[demo.entry] = process.cwd() + '/src/' + demo.entry + '/index.js';
-  plugins.push(new HtmlWebpackPlugin({
+  htmlWebpackPlugins.push(new HtmlWebpackPlugin({
     filename: demo.entry + '/index.html',
     chunks: [demo.entry],
     template: process.cwd() + '/src/' + demo.entry + '/index.html'
@@ -24,10 +24,6 @@ demos.map(demo => {
 });
 
 module.exports = {
-  // entry: {
-  //   index: process.cwd() + '/src/index.js',
-  //   home: process.cwd() + '/src/home/index.js'
-  // },
   entry: entry,
   resolve: {
     extensions: ['.js'],
@@ -35,20 +31,7 @@ module.exports = {
       src: path.resolve(__dirname, './../src')
     }
   },
-  // plugins: [
-  //   new HtmlWebpackPlugin({
-  //     filename: 'index.html',
-  //     chunks: ['index'],
-  //     template: process.cwd() + '/src/index.html',
-  //     favicon: process.cwd() + '/src/favicon.ico'
-  //   }),
-  //   new HtmlWebpackPlugin({
-  //     filename: 'home/index.html',
-  //     chunks: ['home'],
-  //     template: process.cwd() + '/src/home/index.html'
-  //   })
-  // ],
-  plugins: plugins,
+  plugins: [...htmlWebpackPlugins],
   module: {
     rules: [
       {
@@ -69,8 +52,8 @@ module.exports = {
         options: {
           limit: 10000,
           hash: 'sha512',
-          digest: 'hex',
-          name: 'img/[hash].[ext]'
+          publicPath: '/',
+          name: 'assets/images/[hash].[ext]'
         }
       }
     ]

@@ -8,6 +8,17 @@
   <title>Carousel</title>
 </head>
 <body>
-  <p>carousel</p>
+
+  <div id="app">
+    <carousel>
+      <carousel-item v-for="i in 5">
+        {{i}}
+      </carousel-item>
+    </carousel>
+  </div>
+
+  <script src="//cdn.bootcss.com/vue/2.1.10/vue.min.js"></script>
+  <!--<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.slim.min.js"></script>-->
+  <script src="//cdn.bootcss.com/velocity/1.4.1/velocity.min.js"></script>
 </body>
 </html>

@@ -5,7 +5,7 @@ let comboModule = {};
 
 let ENV = process.env.NODE_ENV;
 
-console.log('~current node environment is ' + ENV);
+console.log('~ current node environment is ' + ENV + ' ~');
 
 if ( ENV === 'dev') {
   comboModule = devModule;

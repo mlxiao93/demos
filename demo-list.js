@@ -4,6 +4,10 @@ module.exports = [
     title: 'introduce'
   },
   {
+    entry: 'vue-transition',
+    title: 'vue transition'
+  },
+  {
     entry: 'carousel',
     title: 'carousel'
     // group: '分组1'    //菜单分组
