@@ -1,11 +1,13 @@
 <div class="carousel">
-  <ul class="carousel__list">
+  <ul class="carousel__list" ref="list">
     <slot></slot>
   </ul>
-  <span class="carousel__arrow carousel__arrow--prev">
-      &lt;
-    </span>
-  <span class="carousel__arrow carousel__arrow--next">
-      &gt;
-    </span>
+  <span class="carousel__arrow carousel__arrow--prev"
+        @click="prev">
+    &lt;
+  </span>
+  <span class="carousel__arrow carousel__arrow--next"
+        @click="next">
+    &gt;
+  </span>
 </div>
