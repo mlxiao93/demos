@@ -96,9 +96,17 @@ Vue.component('carousel', {
           boundary = 0.2,
           offsetX = deltaX / listElWidth;
 
-      //TODO 快速滑动(时间短，速度快)时需要触发翻页, 不好确定临界值，暂且不做
-      // console.log(deltaX / deltaT, deltaT);
-
+      //快速滑动(时间短，速度快)时需要触发翻页
+      if (deltaT < 80 && deltaT > 0) {
+        if (deltaX / deltaT < -0.6) {
+          this._moveTo(this.activeIndex + 1);
+          return;
+        }
+        if (deltaX / deltaT > 0.6) {
+          this._moveTo(this.activeIndex - 1);
+          return;
+        }
+      }
 
       if (offsetX < -boundary) {     //右翻
         this._moveTo(this.activeIndex + 1);
@@ -143,12 +151,10 @@ Vue.component('carousel-item', {
       mouseDown: false,
       touchStart: {
         time: 0,
-        x: 0,
-        y: 0
+        x: 0
       },
       touchMove: {
-        x: 0,
-        y: 0
+        x: 0
       },
       deltaX: 0,    //左滑的距离
       deltaT: 0     //滑动的时间
@@ -159,12 +165,14 @@ Vue.component('carousel-item', {
       let touch = e.touches[0];
       this.touchStart.time = Date.now();
       this.touchStart.x = touch.pageX;
-      this.touchStart.y = touch.pageY
+
+      //短暂触击不会触发touchmove,需要重置delta值
+      this.deltaT = 0;
+      this.deltaX = 0;
     },
     handleTouchMove(e) {
       let touch = e.touches[0];
       this.touchMove.x = touch.pageX;
-      this.touchMove.y = touch.pageY;
 
       this.deltaX = this.touchMove.x - this.touchStart.x;
       this.deltaT = Date.now() - this.touchStart.time;
