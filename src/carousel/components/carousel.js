@@ -51,6 +51,7 @@ Vue.component('carousel', {
     _moveTo: function (index, {duration = DURATION} = {}) {
 
       let listEl = this.$refs.list,
+          listElWidth = Velocity.hook(listEl, 'width'),
           lastIndex = this.items.length - 1,
           scrollIndex = this.loop ? index + 1 : index;
 
@@ -62,11 +63,11 @@ Vue.component('carousel', {
         }
         Velocity(listEl, 'stop');
         Velocity(listEl, {
-          translateX: () => `-${scrollIndex * 100}%`
+          translateX: () => `-${scrollIndex * listElWidth}px`
         }, {
           complete: () => {
             Velocity(listEl, {
-              translateX: () => `-${(this.activeIndex + 1) * 100}%`
+              translateX: `-${(this.activeIndex + 1) * listElWidth}px`
             }, {duration: 0});
           }
         });
@@ -77,10 +78,38 @@ Vue.component('carousel', {
       this.activeIndex = index;
       Velocity(listEl, 'stop');
       Velocity(listEl, {
-        translateX: () => `-${scrollIndex * 100}%`
+        translateX: `-${scrollIndex * listElWidth}px`
       }, {
         duration
       });
+    },
+    handleTouchMove(x) {
+      let listEl = this.$refs.list,
+          listElWidth = Velocity.hook(listEl, 'width'),
+          scrollIndex = this.loop ? this.activeIndex + 1 : this.activeIndex,
+          initTranslateX = -scrollIndex * listElWidth;
+      Velocity.hook(listEl, "translateX",`${initTranslateX + x}px`);
+    },
+    handleTouchEnd(deltaX, deltaT) {
+      let listEl = this.$refs.list,
+          listElWidth = Velocity.hook(listEl, 'width'),
+          boundary = 0.2,
+          offsetX = deltaX / listElWidth;
+
+      //TODO 快速滑动(时间短，速度快)时需要触发翻页, 不好确定临界值，暂且不做
+      // console.log(deltaX / deltaT, deltaT);
+
+
+      if (offsetX < -boundary) {     //右翻
+        this._moveTo(this.activeIndex + 1);
+        return;
+      }
+      if (offsetX > boundary) {      //左翻
+        this._moveTo(this.activeIndex - 1);
+        return;
+      }
+
+      this._moveTo(this.activeIndex);    //归位
     },
     prev: throttle(function() {
       this._moveTo(this.activeIndex - 1);
@@ -99,10 +128,68 @@ Vue.component('carousel', {
 
 Vue.component('carousel-item', {
   template: `
-    <li class="carousel__item carousel-item">
+    <li class="carousel__item carousel-item" 
+    @mousedown="handleMouseDown"
+    @touchstart="handleTouchStart"
+    @mousemove="handleMouseMove"
+    @touchmove="handleTouchMove"
+    @mouseup="handleMouseUp"
+    @touchend="handleTouchEnd">
       <slot></slot>
     </li>
   `,
+  data() {
+    return {
+      mouseDown: false,
+      touchStart: {
+        time: 0,
+        x: 0,
+        y: 0
+      },
+      touchMove: {
+        x: 0,
+        y: 0
+      },
+      deltaX: 0,    //左滑的距离
+      deltaT: 0     //滑动的时间
+    }
+  },
+  methods: {
+    handleTouchStart(e) {
+      let touch = e.touches[0];
+      this.touchStart.time = Date.now();
+      this.touchStart.x = touch.pageX;
+      this.touchStart.y = touch.pageY
+    },
+    handleTouchMove(e) {
+      let touch = e.touches[0];
+      this.touchMove.x = touch.pageX;
+      this.touchMove.y = touch.pageY;
+
+      this.deltaX = this.touchMove.x - this.touchStart.x;
+      this.deltaT = Date.now() - this.touchStart.time;
+
+      //改变容器的transformX
+      this.$parent && this.$parent.handleTouchMove(this.deltaX);
+
+    },
+    handleTouchEnd() {
+      this.$parent && this.$parent.handleTouchEnd(this.deltaX, this.deltaT);
+    },
+
+    handleMouseDown(e) {
+      this.mouseDown = true;
+      this.handleTouchStart({touches: [{pageX: e.pageX, pageY: e.pageY}]});
+    },
+    handleMouseMove(e) {
+      if (!this.mouseDown) return;
+      this.handleTouchMove({touches: [{pageX: e.pageX, pageY: e.pageY}]});
+    },
+    handleMouseUp() {
+      this.mouseDown = false;
+      this.handleTouchEnd();
+    }
+  },
   created() {
     this.$parent && this.$parent.handleItemChange();
   },
