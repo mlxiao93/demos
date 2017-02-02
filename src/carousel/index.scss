@@ -1,6 +1,22 @@
-body {
+#app {
+}
+
+.carousel {
+  width: 60vw;
+  height: 200px;
+  margin: 30px auto;
+}
+
+.carousel-item {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 100px;
+  color: #fff;
+  &:nth-child(1n) {
+    background: #c7d6e6;
+  }
+  &:nth-child(2n) {
+    background: #99a9bf;
+  }
 }
+

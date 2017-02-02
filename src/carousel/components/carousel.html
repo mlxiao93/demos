@@ -2,12 +2,18 @@
   <ul class="carousel__list" ref="list">
     <slot></slot>
   </ul>
-  <span class="carousel__arrow carousel__arrow--prev"
+  <button class="carousel__arrow carousel__arrow--prev"
         @click="prev">
-    &lt;
-  </span>
-  <span class="carousel__arrow carousel__arrow--next"
+    <i class="fa fa-angle-left"></i>
+  </button>
+  <button class="carousel__arrow carousel__arrow--next"
         @click="next">
-    &gt;
-  </span>
+    <i class="fa fa-angle-right"></i>
+  </button>
+  <ul class="carousel__indicators">
+    <li class="carousel__indicator"
+        v-for="item, i in items"
+        @click="jumpTo(i)"
+        :class="{'carousel__indicator--active': i == activeIndex}"></li>
+  </ul>
 </div>

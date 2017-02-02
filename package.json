@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=dev webpack-dev-server --inline --hot",
+    "start": "cross-env NODE_ENV=dev webpack-dev-server --inline",
     "dist": "cross-env NODE_ENV=prod webpack",
     "babel-node": "babel-node",
     "publish": "npm run dist && node publish.js",

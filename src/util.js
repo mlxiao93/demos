@@ -8,7 +8,7 @@ export const debounce = (fn, timeout = 400) => {
   }
 };
 
-export const throttle = (fn, timeout = 400) => {
+export const throttle = (fn, timeout = 400, execLast) => {
   let lastExecTime = 0;
   let timer = null;
   return function() {
@@ -17,7 +17,7 @@ export const throttle = (fn, timeout = 400) => {
     if (now - lastExecTime > timeout) {
       lastExecTime = now;
       fn.apply(this, arguments);
-    } else {    //连续触发的最后一次需要被响应
+    } else if(execLast) {    //响应最后一次触发
       timer = setTimeout(() => {
         lastExecTime = now;
         fn.apply(this, arguments);
