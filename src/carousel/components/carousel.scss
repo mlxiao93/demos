@@ -66,6 +66,7 @@
     width: 8px;
     height: 8px;
     margin: 0 4px;
+    transition: all .4s;
 
     &--active {
       background: rgba(255, 255, 255, .5);

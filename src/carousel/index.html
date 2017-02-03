@@ -11,11 +11,21 @@
 <body>
 
   <div id="app">
-    <carousel :loop="true">
+    <carousel :loop="true"
+              :interval="2500"
+              :arrow="true"
+              :indicator="true">
       <carousel-item v-for="i in count">
         {{i}}
       </carousel-item>
     </carousel>
+
+    <!--<carousel3d>-->
+      <!--<carousel3d-item v-for="i in count">-->
+        <!--{{i}}-->
+      <!--</carousel3d-item>-->
+    <!--</carousel3d>-->
+
   </div>
 
   <!--<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.slim.min.js"></script>-->

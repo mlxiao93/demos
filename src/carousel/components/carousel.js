@@ -10,6 +10,18 @@ Vue.component('carousel', {
     loop: {
       type: Boolean,
       default: false
+    },
+    interval: {
+      type: Number,
+      default: 0
+    },
+    arrow: {
+      type: Boolean,
+      default: false
+    },
+    indicator: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -74,8 +86,14 @@ Vue.component('carousel', {
         return;
       }
 
-      if (index < 0 || index > lastIndex) return;
-      this.activeIndex = index;
+      if (index < 0) {
+        this.activeIndex = scrollIndex = lastIndex;
+      } else if (index > lastIndex) {
+        this.activeIndex = scrollIndex = 0;
+      } else {
+        this.activeIndex = index;
+      }
+
       Velocity(listEl, 'stop');
       Velocity(listEl, {
         translateX: `-${scrollIndex * listElWidth}px`
@@ -95,6 +113,11 @@ Vue.component('carousel', {
           listElWidth = Velocity.hook(listEl, 'width'),
           boundary = 0.2,
           offsetX = deltaX / listElWidth;
+
+      //若不支持循坏，边界滑动需要归位
+      if (!this.loop && (this.activeIndex === 0 || this.activeIndex === this.items.length - 1)) {
+        this._moveTo(this.activeIndex);
+      }
 
       //快速滑动(时间短，速度快)时需要触发翻页
       if (deltaT < 80 && deltaT > 0) {
@@ -131,6 +154,16 @@ Vue.component('carousel', {
     handleItemChange: debounce(function() {
       this._init();
     }, 200)
+  },
+  created() {
+    if (this.interval) {
+       this._interval = setInterval(() => {
+         this._moveTo(this.activeIndex + 1);
+       }, this.interval)
+    }
+  },
+  destroyed() {
+    clearInterval(this._interval);
   }
 });
 
