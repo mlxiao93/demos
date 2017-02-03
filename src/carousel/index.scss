@@ -1,13 +1,13 @@
 #app {
 }
 
-.carousel {
+.carousel, .carousel3d {
   width: 320px;
   height: 200px;
   margin: 30px auto;
 }
 
-.carousel-item {
+.carousel-item, .carousel3d-item {
   display: flex;
   justify-content: center;
   align-items: center;

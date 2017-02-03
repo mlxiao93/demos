@@ -5,7 +5,30 @@ import {throttle, debounce} from 'src/util';
 const DURATION = 400;
 
 Vue.component('carousel', {
-  template: require('./carousel.html'),
+  template: `
+    <div class="carousel">
+      <ul class="carousel__list" ref="list">
+        <slot></slot>
+      </ul>
+      <button class="carousel__arrow carousel__arrow--prev"
+              v-show="arrow"
+              @click="prev">
+        <i class="fa fa-angle-left"></i>
+      </button>
+      <button class="carousel__arrow carousel__arrow--next"
+              v-show="arrow"
+              @click="next">
+        <i class="fa fa-angle-right"></i>
+      </button>
+      <ul class="carousel__indicators"
+          v-show="indicator">
+        <li class="carousel__indicator"
+            v-for="item, i in items"
+            @click="jumpTo(i)"
+            :class="{'carousel__indicator--active': i == activeIndex}"></li>
+      </ul>
+    </div>
+  `,
   props: {
     loop: {
       type: Boolean,
