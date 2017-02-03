@@ -6,7 +6,13 @@ const DURATION = 400;
 Vue.component('carousel3d', {
   template: `
     <div class="carousel3d">
-      <ul class="carousel3d__list">
+      <ul class="carousel3d__list"
+          @mousedown="handleMouseDown"
+          @touchstart="handleTouchStart"
+          @mousemove="handleMouseMove"
+          @touchmove="handleTouchMove"
+          @mouseup="handleMouseUp"
+          @touchend="handleTouchEnd">
         <slot></slot>
       </ul>
     </div>
@@ -14,7 +20,15 @@ Vue.component('carousel3d', {
   data() {
     return {
       activeIndex: 0,
-      items: []
+      items: [],
+      mouseDown: false,
+      touchStart: {
+        X: 0
+      },
+      touchMove: {
+        x: 0
+      },
+      deltaX: 0
     }
   },
   methods: {
@@ -52,18 +66,23 @@ Vue.component('carousel3d', {
             maxDistance = Math.ceil(itemCount / 2),
             indent = 1 - (absDistance / maxDistance) * 0.5;   //最小0.5
 
-        let scale = indent - .2;
         let itemElWidth = Velocity.hook(itemEl, 'width');
-        let scaleWidth = itemElWidth * (1 - scale);
 
-        let translateX = (1 - indent) * itemElWidth;
-        if (translateX !== 0) translateX += scaleWidth / 2;
-        if (distance < 0) translateX *= -1;
+        let translateX = itemElWidth * 0.3 * absDistance;
+        let translateZ = absDistance * -100;
+        if (distance < 0) {
+          translateX *= -1;
+        } else if (distance === 0) {
+          translateX = 0;
+          translateZ = 0;
+        }
 
+        Velocity(itemEl, 'stop');
         Velocity(itemEl, {
-          scale,
+          scale: 0.8,
           opacity: indent,
-          translateX: `${translateX}px`
+          translateX: `${translateX}px`,
+          translateZ: `${translateZ}px`
         }, {
           duration,
           begin: () => {
@@ -76,10 +95,45 @@ Vue.component('carousel3d', {
     },
     handleItemChange: debounce(function() {
       this.items = this.$children.filter(child => child.$options.name === 'carousel3d-item');
-      this._moveTo(3, {duration: 0});
-    }, 200),
+      this._moveTo(0, {duration: 0});
+    }, 100),
     handleItemClick(index) {
+      if (this.mouseMove) return;
+      if (index === this.activeIndex) return;
       this._moveTo(index);
+    },
+    handleTouchStart(e) {
+      let touch = e.touches[0];
+      this.touchStart.x = touch.pageX;
+
+      this.deltaX = 0;
+    },
+    handleTouchMove(e) {
+      let touch = e.touches[0];
+      this.touchMove.x = touch.pageX;
+
+      this.deltaX = this.touchMove.x - this.touchStart.x;
+    },
+    handleTouchEnd() {
+      if (this.deltaX > 50) {
+        this._moveTo(+this.activeIndex - 1);
+      } else if (this.deltaX < -50) {
+        this._moveTo(+this.activeIndex + 1);
+      }
+    },
+    handleMouseDown(e) {
+      this.mouseDown = true;
+      this.handleTouchStart({touches: [{pageX: e.pageX}]});
+    },
+    handleMouseMove(e) {
+      if (!this.mouseDown) return;
+      this.mouseMove = true;
+      this.handleTouchMove({touches: [{pageX: e.pageX}]})
+    },
+    handleMouseUp() {
+      setTimeout(() => this.mouseMove = false, 200);
+      this.mouseDown = false;
+      this.handleTouchEnd();
     }
   }
 });

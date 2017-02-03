@@ -243,11 +243,11 @@ Vue.component('carousel-item', {
 
     handleMouseDown(e) {
       this.mouseDown = true;
-      this.handleTouchStart({touches: [{pageX: e.pageX, pageY: e.pageY}]});
+      this.handleTouchStart({touches: [{pageX: e.pageX}]});
     },
     handleMouseMove(e) {
       if (!this.mouseDown) return;
-      this.handleTouchMove({touches: [{pageX: e.pageX, pageY: e.pageY}]});
+      this.handleTouchMove({touches: [{pageX: e.pageX}]});
     },
     handleMouseUp() {
       this.mouseDown = false;
