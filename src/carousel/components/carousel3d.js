@@ -34,8 +34,6 @@ Vue.component('carousel3d', {
   methods: {
     _moveTo(index, {duration = DURATION} = {}) {
 
-      console.log(index);
-
       let itemEls = this.items.map(item => item.$el),
           itemCount = itemEls.length;
 
