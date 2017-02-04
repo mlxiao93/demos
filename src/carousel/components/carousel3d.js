@@ -34,6 +34,8 @@ Vue.component('carousel3d', {
   methods: {
     _moveTo(index, {duration = DURATION} = {}) {
 
+      console.log(index);
+
       let itemEls = this.items.map(item => item.$el),
           itemCount = itemEls.length;
 
@@ -87,6 +89,9 @@ Vue.component('carousel3d', {
           duration,
           begin: () => {
             Velocity.hook(itemEl, 'zIndex', itemCount - absDistance);
+          },
+          complete: () => {
+            Velocity.hook(itemEl, 'scale', 0.8);   //解决移动端首次执行动画scale=1的问题
           }
         })
 
@@ -99,7 +104,7 @@ Vue.component('carousel3d', {
     }, 100),
     handleItemClick(index) {
       if (this.mouseMove) return;
-      if (index === this.activeIndex) return;
+      if (index == this.activeIndex) return;
       this._moveTo(index);
     },
     handleTouchStart(e) {
@@ -147,7 +152,7 @@ Vue.component('carousel3d-item', {
   methods: {
     handleClick(e) {
       let index = e.target.getAttribute('data-index');
-      this.$parent && this.$parent.handleItemClick(index);
+      this.$parent && this.$parent.handleItemClick(+index);
     }
   },
   created() {
