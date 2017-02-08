@@ -1,6 +1,6 @@
 module.exports = [
   {
-    entry: 'introduce',
+    entry: 'introduction',
     title: 'introduction'
   },
   {
