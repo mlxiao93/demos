@@ -10,13 +10,13 @@
   + entry：filder name
   + title：demo title
   + group: demo group
-+ Open browser localhost:8080
++ Open browser： localhost:8080
 
 ## Preview publish
 + `npm run serve:dist`
-+ Open browser localhost:8081
++ Open browser：localhost:8081
 
-++ Publish
+## Publish
 + `npm run publish`
-  It will publish your site to github pages
-+ Open browser {your github username}.github.io/demos
+  this will publish your site to github pages
++ Open browser： {your github username}.github.io/demos
