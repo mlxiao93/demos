@@ -1,7 +1,7 @@
 module.exports = [
   {
     entry: 'introduce',
-    title: 'introduce'
+    title: 'introduction'
   },
   {
     entry: 'vue-transition',
