@@ -19,5 +19,9 @@ module.exports = [
   {
     entry: 'img-lazy-load',
     title: 'image lazy load'
+  },
+  {
+    entry: 'dice',
+    title: 'dice'
   }
 ];
