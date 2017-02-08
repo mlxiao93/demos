@@ -1,8 +1,14 @@
 import './index.scss'
+import './components/lazy-img'
 
 new Vue({
   el: '#app',
   data: {
-    imagePrefix: 'http://ol1waj5za.bkt.clouddn.com/'
+
+  },
+  filters: {
+    imgUrl: function(index) {
+      return 'http://ol1waj5za.bkt.clouddn.com/' + index + '.jpg';
+    }
   }
 });

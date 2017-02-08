@@ -8,8 +8,13 @@
   <title>Image lazy load</title>
 </head>
 <body>
+
   <div id="app">
-    <img :src="imagePrefix + '1.jpg'" alt="">
+    <div class="list">
+      <div v-for="i in 30" class="item">
+        <lazy-img :src="i | imgUrl" alt=""></lazy-img>
+      </div>
+    </div>
   </div>
 
   <script src="//cdn.bootcss.com/vue/2.1.10/vue.min.js"></script>

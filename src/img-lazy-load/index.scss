@@ -1,0 +1,47 @@
+@import "../mixin";
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@mixin drawItem($count: 1, $borderWidth: 1px) {
+
+  border-bottom: $borderWidth solid rgba(0, 0, 0, .08);
+  border-right: $borderWidth solid rgba(0, 0, 0, .08);
+
+  width: (100% / $count);
+  &:nth-child(#{$count}n + 1) {
+    border-left: $borderWidth solid rgba(0, 0, 0, .08);
+  }
+  &:nth-child(-n + #{$count}) {
+    border-top: $borderWidth solid rgba(0, 0, 0, .08);
+  }
+}
+
+.item {
+
+  height: 300px;
+  box-sizing: border-box;
+  position: relative;
+
+  @include drawItem(4);
+
+  img {
+    max-width: calc(100% - 1em);
+    max-height: calc(100% - 1em);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@include for-phone-only {
+  .item {
+    height: 120px;
+    @include drawItem(4, 0px);   //覆盖pc
+    @include drawItem(2);
+  }
+
+}
