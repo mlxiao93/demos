@@ -4,8 +4,8 @@ module.exports = [
     title: 'introduction'
   },
   {
-    entry: 'vue-transition',
-    title: 'vue transition'
+    entry: 'vue-tree',
+    title: 'vue tree'
   },
   {
     entry: 'carousel',
@@ -19,6 +19,10 @@ module.exports = [
   {
     entry: 'img-lazy-load',
     title: 'image lazy load'
+  },
+  {
+    entry: 'vue-transition',
+    title: 'vue transition'
   },
   {
     entry: 'dice',
