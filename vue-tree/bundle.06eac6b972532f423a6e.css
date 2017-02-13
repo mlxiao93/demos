@@ -1,0 +1,1 @@
+.tree ul{max-height:0;overflow:hidden;transition:max-height 1s}.tree ul.expand{max-height:none}.tree li{margin:.5rem 0}
