@@ -1,5 +1,6 @@
 import './tree.scss'
 import {isEmpty} from 'src/util';
+import {extendNode} from './service'
 
 const treeBus = new Vue();
 
@@ -15,10 +16,10 @@ const treeNodes = {
       treeBus.$emit('add', this.parent)
     },
     update: function(node) {
-      treeBus.$emit('update', node, this.parent);
+      treeBus.$emit('update', node);
     },
     remove: function(node) {
-      treeBus.$emit('remove', node, this.parent);
+      treeBus.$emit('remove', node);
     },
 
     handleItemNameClick: function(node) {
@@ -37,45 +38,20 @@ Vue.component('tree', {
   props: {
     data: Array
   },
-  methods: {
-    enhanceNode: function(node) {
-
-      let oldNode = treeBus.oldFlattenedData.find(oldNode => oldNode.id === node.id);
-
-      node.$hasChildren = function () {
-        return !isEmpty(node.children)
-      };
-
-      node.$expand = oldNode && oldNode.$expand ||  false;
-
-      node.$toggleExpand = function(expand) {
-        this.$expand = isEmpty(expand) ? !this.$expand : expand;
-      };
-
-      if (!node.$hasChildren()) return;
-
-      node.children.map(subNode => {
-        subNode.$parent = node;
-        this.enhanceNode(subNode);
-      })
-    },
-    flattenNode: function(node, flattenedData = []) {
-      flattenedData.push(node);
-      if (!node.children) return flattenedData;
-      node.children.map(subNode => {
-        this.flattenNode(subNode, flattenedData)
-      });
-
-      return flattenedData;
-
+  data() {
+    return {
+      lastData: null
     }
+  },
+  methods: {
+
   },
   computed: {
     root: function() {
       return {$root: true, children: this.data};
     },
     nodes: function() {
-      this.enhanceNode(this.root);
+      extendNode(this.root, this.lastData);
       return this.data;
     }
   },
@@ -83,20 +59,19 @@ Vue.component('tree', {
     treeNodes
   },
   created: function() {
-
-    treeBus.oldFlattenedData = this.flattenNode(this.root);
+    this.lastData = this.data;
 
     treeBus.$on('add', (parent) => {
       this.$emit('add', parent);
     });
-    treeBus.$on('update', (node, parent) => {
-      this.$emit('update', node, parent);
+    treeBus.$on('update', node => {
+      this.$emit('update', node);
     });
-    treeBus.$on('remove', (node, parent) => {
-      this.$emit('remove', node, parent);
+    treeBus.$on('remove', node => {
+      this.$emit('remove', node);
     });
   },
   beforeUpdate: function () {
-    treeBus.oldFlattenedData = this.flattenNode(this.root);
+    this.lastData = this.data;
   }
 });

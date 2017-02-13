@@ -5,7 +5,9 @@
       <button @click="update(node)">~</button>
       <button @click="remove(node)">×</button>
     </div>
-    <tree-nodes :class="{expand: node.$expand}" :nodes="node.children" :parent="node" />
+    <tree-nodes :class="{expand: node.$expand}"
+                :nodes="node.children"
+                :parent="node"/>
   </li>
   <li>
     <button @click="add">+</button>

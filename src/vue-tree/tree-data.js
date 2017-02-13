@@ -42,6 +42,18 @@ function findNode(id, data) {
   return false;
 }
 
+function removeNode(id, data) {
+  let _data = data;
+  if (Array.isArray(data)) _data = {children: data};
+  if (!_data.children) return;
+  let index = _data.children.findIndex(child => child.id == id);
+  if (index >= 0) {
+    _data.children.splice(index, 1);
+    return;
+  }
+  _data.children.map(child => removeNode(id, child));
+}
+
 export default class TreeData {
   key = '';
   data = [];
@@ -52,13 +64,16 @@ export default class TreeData {
     }
     this.data = JSON.parse(localStorage.getItem(this.key));
   }
-  _update() {
-    localStorage.setItem(this.key, JSON.stringify(this.data));
+  _async() {    //将data同步到localStorage
+    localStorage.setItem(this.key, JSON.stringify(this.data, (key, val) => {
+      if (/^\$/.test(key)) return undefined;
+      return val;
+    }));
     this.data = JSON.parse(localStorage.getItem(this.key));
   }
   reset() {
     this.data = INIT_DATA;
-    this._update();
+    this._async();
   }
   add(node, parent) {
     if (!node) return;
@@ -71,7 +86,24 @@ export default class TreeData {
     _parent = _parent || {children: this.data};
     _parent.children = _parent.children || [];
     _parent.children.push(node);
-    this._update();
+    this._async();
+  }
+  update(node) {
+    if (!node) return;
+    let _node = findNode(node.id, this.data);
+    // _node = {...node};
+    for (let key in node) {
+      _node[key] = node[key];
+    }
+    this._async();
+  }
+  remove(node) {
+    if (!node) return;
+    removeNode(node.id, this.data);
+    this._async();
+  }
+  all() {
+    return JSON.parse(JSON.stringify(this.data));
   }
 
 }
