@@ -28,6 +28,12 @@ export default {
   created() {
     this.bus.refresh.register(() => {
       this.$forceUpdate();
-    })
+    });
+
+    //解决父元素被选中时，新增的子元素不自动选中的问题
+    if (this.parent.$parent && this.parent.$parent.$check) {
+      this.parent.$check = true;
+      this.bus.refresh.fire();
+    }
   }
 }

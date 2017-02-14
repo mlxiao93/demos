@@ -12,6 +12,14 @@ function findNode(id, data) {
   return false;
 }
 
+export function findCheckedNodeIds (node, checkedNodeIds = []) {
+  if (node.id && node.$check) {
+    checkedNodeIds.push(node.id);
+  }
+  node.children && node.children.map(child => findCheckedNodeIds(child, checkedNodeIds));
+  return checkedNodeIds;
+}
+
 export function extendNode (node, lastData) {
 
   let lastNode = findNode(node.id, lastData);  //旧状态的还原
@@ -31,7 +39,12 @@ export function extendNode (node, lastData) {
     this.$check = check === undefined ? this.$check : check;
     if (!this.$check) {  //当前未选中
       this.$hasChildren() && this.children.map(child => child.$toggleCheck(false));   //所有子节未选中
-      this.$parent && (this.$parent.$check = false);  //置父节点为未选中状态
+
+      let _parent = this.$parent;
+      while (_parent) {          //所有父节点未选中
+        _parent.$check = false;
+        _parent = _parent.$parent;
+      }
     } else {   //当前选中
       this.$hasChildren() && this.children.map(child => child.$toggleCheck(true));    //所有子节点选中
 

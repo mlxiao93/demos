@@ -32,6 +32,10 @@ new Vue({
     removeTreeNode: function (node) {
       treeData.remove(node);
       this.data = treeData.all();
+    },
+    removeCheckedTreeNodes: function (nodeIds) {
+      treeData.removeChecked(nodeIds);
+      this.data = treeData.all();
     }
   }
 });

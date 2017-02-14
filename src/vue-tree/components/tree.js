@@ -1,6 +1,6 @@
 import './tree.scss'
 import {isEmpty} from 'src/util';
-import {extendNode, deepCopy} from './service'
+import {extendNode, findCheckedNodeIds} from './service'
 import treeNodes from './tree-nodes'
 
 Vue.component('tree', {
@@ -14,24 +14,24 @@ Vue.component('tree', {
       bus: new Vue()
     }
   },
-  methods: {
-    handleCheckAllToggle: function () {
-      console.log(this.root.$toggleCheck());
-      this.bus.refresh.fire();
-    }
-  },
-  components: {
-    treeNodes
-  },
-  directives: {
-
-  },
   computed: {
     root: function () {
       let root = {$root: true, children: this.data};
       extendNode(root, this.lastData);
       return root;
     }
+  },
+  methods: {
+    handleCheckAllToggle: function () {
+      this.root.$toggleCheck();
+      this.bus.refresh.fire();
+    },
+    handleDeleteCheckedClick: function () {
+      this.$emit('remove-checked', findCheckedNodeIds(this.root));
+    }
+  },
+  components: {
+    treeNodes
   },
   created () {
 

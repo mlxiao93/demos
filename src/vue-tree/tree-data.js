@@ -102,6 +102,12 @@ export default class TreeData {
     removeNode(node.id, this.data);
     this._async();
   }
+  removeChecked(nodeIds) {
+    console.log(nodeIds);
+    if(!Array.isArray(nodeIds) || nodeIds.length <= 0) return;
+    nodeIds.map(id => removeNode(id, this.data));
+    this._async();
+  }
   all() {
     return JSON.parse(JSON.stringify(this.data));
   }
