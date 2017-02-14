@@ -1,73 +1,66 @@
 import './tree.scss'
 import {isEmpty} from 'src/util';
-import {extendNode} from './service'
-
-const treeBus = new Vue();
-
-const treeNodes = {
-  name: 'tree-nodes',
-  template: require('./tree-nodes.html'),
-  props: {
-    nodes: Array,
-    parent: Object
-  },
-  methods: {
-    add: function() {
-      treeBus.$emit('add', this.parent)
-    },
-    update: function(node) {
-      treeBus.$emit('update', node);
-    },
-    remove: function(node) {
-      treeBus.$emit('remove', node);
-    },
-
-    handleItemNameClick: function(node) {
-      node.$toggleExpand();
-      this.$forceUpdate();
-    }
-  }
-};
+import {extendNode, deepCopy} from './service'
+import treeNodes from './tree-nodes'
 
 Vue.component('tree', {
-  template: `
-    <div class="tree">
-      <tree-nodes :nodes="nodes" :parent="root"/>
-    </div>
-  `,
+  template: require('./tree.html'),
   props: {
-    data: Array
+    data: Array,
+    rowTemplate: String
   },
   data() {
     return {
-      lastData: null
+      bus: new Vue()
     }
   },
   methods: {
-
-  },
-  computed: {
-    root: function() {
-      return {$root: true, children: this.data};
-    },
-    nodes: function() {
-      extendNode(this.root, this.lastData);
-      return this.data;
+    handleCheckAllToggle: function () {
+      console.log(this.root.$toggleCheck());
+      this.bus.refresh.fire();
     }
   },
   components: {
     treeNodes
   },
-  created: function() {
+  directives: {
+
+  },
+  computed: {
+    root: function () {
+      let root = {$root: true, children: this.data};
+      extendNode(root, this.lastData);
+      return root;
+    }
+  },
+  created () {
+
     this.lastData = this.data;
 
-    treeBus.$on('add', (parent) => {
+    this.bus.refresh = new class {
+      handles = [];
+      register(func) {
+        if (typeof func === 'function') {
+          this.handles.push(func);
+        }
+      }
+      fire() {
+        this.handles.map(func => {
+          func.call();
+        })
+      }
+    };
+    this.bus.refresh.register(() => {
+      this.$forceUpdate();
+    });
+
+    this.bus.$on('add', (parent) => {
       this.$emit('add', parent);
     });
-    treeBus.$on('update', node => {
+    this.bus.$on('update', node => {
       this.$emit('update', node);
     });
-    treeBus.$on('remove', node => {
+    this.bus.$on('remove', node => {
       this.$emit('remove', node);
     });
   },

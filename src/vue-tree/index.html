@@ -9,7 +9,11 @@
 </head>
 <body>
 <div id="app">
-  <tree :data="data" @add="addTreeNode" @update="updateTreeNode" @remove="removeTreeNode"></tree>
+  <tree :data="data"
+        @add="addTreeNode"
+        @update="updateTreeNode"
+        @remove="removeTreeNode">
+  </tree>
 </div>
 <script src="//cdn.bootcss.com/vue/2.1.8/vue.min.js"></script>
 </body>

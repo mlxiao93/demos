@@ -1,0 +1,7 @@
+<div class="tree">
+  <div>
+    <input type="checkbox" v-model="root.$check" @change="handleCheckAllToggle">
+    <button>批量删除</button>
+  </div>
+  <tree-nodes :bus="bus" :nodes="root.children" :parent="root"/>
+</div>

@@ -1,15 +1,17 @@
 <ul :class="{expand: parent.$root}">
   <li v-for="node in nodes">
     <div>
+      <input type="checkbox" v-model="node.$check" @change="handleCheckToggle(node)">
       <span @click="handleItemNameClick(node)">{{node.name}}</span>
-      <button @click="update(node)">~</button>
-      <button @click="remove(node)">×</button>
+      <button @click="update(node)">编辑</button>
+      <button @click="remove(node)">删除</button>
     </div>
     <tree-nodes :class="{expand: node.$expand}"
+                :bus="bus"
                 :nodes="node.children"
                 :parent="node"/>
   </li>
   <li>
-    <button @click="add">+</button>
+    <button @click="add">新增</button>
   </li>
 </ul>
