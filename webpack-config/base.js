@@ -26,7 +26,7 @@ demos.map(demo => {
 module.exports = {
   entry: entry,
   resolve: {
-    extensions: ['.js'],
+    extensions: ['.js', '.jsx'],
     alias: {
       src: path.resolve(__dirname, './../src')
     }
@@ -35,7 +35,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.js$|\.jsx$/,
         exclude: [/node_modules/],
         loader: 'babel-loader'
       },
