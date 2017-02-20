@@ -1,15 +1,8 @@
 import './index.scss'
 
-let box = document.querySelector('.box');
+import "babel-polyfill";
 
-let target = document.documentElement;
-// let target = box;
-console.log(target.clientHeight);
-console.log(target.offsetHeight);
-console.log(target.scrollHeight);
-
-console.log(box.getBoundingClientRect());
-
-// console.log(box.offsetHeight, box.clientHeight);
-// console.log(box.offsetTop);
-
+function* foo(x) {
+  let y = yield x + 2;
+  return y;
+}
