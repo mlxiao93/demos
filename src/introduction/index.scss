@@ -13,6 +13,19 @@ p {
   }
 }
 
+@keyframes typing {
+  0% {
+
+  }
+  100% {
+
+  }
+}
+
+.test {
+
+}
+
 @include for-phone-only {
   p {
     padding: 1em;
