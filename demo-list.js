@@ -28,12 +28,12 @@ module.exports = [
     entry: 'dice',
     title: 'dice'
   },
-  {
-    entry: 'rx-todo',
-    title: 'rx todo'
-  },
-  {
-    entry: 'playground',
-    title: 'playground'
-  }
+  // {
+  //   entry: 'rx-todo',
+  //   title: 'rx todo'
+  // },
+  // {
+  //   entry: 'playground',
+  //   title: 'playground'
+  // }
 ];

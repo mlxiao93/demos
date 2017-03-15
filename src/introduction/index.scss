@@ -1,33 +1,33 @@
 @import "../reset";
 @import "../mixin";
-p {
-  font-size: 15px;
-  text-indent: 2em;
-  line-height: 1.6em;
-  padding: 1em 4em;
-  //word-break: break-all;
-  text-align: justify;
-  white-space: normal;
-  a {
-    color: #42b983;
+
+
+.typing {
+  @keyframes typing {
+    from {
+      width: 0;
+    }
   }
+  @keyframes caret {
+    50% {
+      border-color: inherit;
+    }
+  }
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: Consolas, Monaco, monospace;
+  animation: typing backwards,
+             caret infinite;
+
+  border-right: 0.1em solid transparent;
 }
 
-@keyframes typing {
-  0% {
-    width: 0;
-  }
-  100% {
-    width: 10ch;
-  }
-}
-
-.test {
-  animation: 1s typing infinite;
+body {
+  padding: 1em;
+  line-height: 1.4;
 }
 
 @include for-phone-only {
-  p {
-    padding: 1em;
-  }
+
 }
