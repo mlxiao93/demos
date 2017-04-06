@@ -32,8 +32,8 @@ module.exports = [
   //   entry: 'rx-todo',
   //   title: 'rx todo'
   // },
-  // {
-  //   entry: 'playground',
-  //   title: 'playground'
-  // }
+  {
+    entry: 'playground',
+    title: 'playground'
+  }
 ];
