@@ -4,85 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
   <title>Playground</title>
 </head>
+<style>
+
+</style>
 <body>
-  <p>Hello</p>
+  <div id="app">
+
+    <div class="main-area">
+
+      <ul class="message-list">
+        <li v-for="message in messages" :key="message.id">
+          {{message.content}}
+        </li>
+        <div class="load-more">
+          <button @click="loadMore">加载历史消息</button>
+        </div>
+      </ul>
+    </div>
+
+
+    <div class="text-area">
+      <textarea ref="textarea"></textarea>
+      <button @click="addOne">发送新消息</button>
+    </div>
+  </div>
+  <script src="//cdn.bootcss.com/vue/2.1.8/vue.min.js"></script>
 </body>
-<script src="https://cdn.bootcss.com/jsSHA/2.2.0/sha1.js"></script>
-<script src="https://cdn.bootcss.com/es6-promise/4.1.0/es6-promise.auto.min.js"></script>
-<script src="https://cdn.bootcss.com/fetch/2.0.3/fetch.min.js"></script>
-<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-<script>
-
-//    wxShare();
-
-    function wxShare(appId, appSecret, host, title, desc, link, imgUrl) {
-        var accessTokenUrl = 'https://api.weixin.qq.com/cgi-bin/token';
-        var jsApiTicketUrl = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket';
-        
-        function fetchAccessToken(appId, appSecret) {
-            return new Promise(function (resolve) {
-                fetch(accessTokenUrl + '?grant_type=client_credential&appid=' + appId + '&secret=' + appSecret)
-                    .then(function (res) {return res.json();})
-                    .then(function (body) {
-                      resolve(body['access_token']);
-                    })
-            });
-        }
-
-        function fetchJsApiTicket(accessToken) {
-            return new Promise(function (resolve) {
-                fetch(jsApiTicketUrl + '?access_token=' + accessToken + '&type=jsapi')
-                    .then(function (res) {return res.json();})
-                    .then(function (body) {
-                        resolve(body['ticket']);
-                    })
-            });
-        }
-        
-        function generateWXJsSdkConfig(appId, appSecret) {
-            return new Promise(function (resolve) {
-                fetchAccessToken(app, appSecret).then(function (accessToken) {
-                    return fetchJsApiTicket(accessToken);
-                }).then(function (jsapi_ticket) {
-                    var noncestr = Math.random().toString(36).substr(2);
-                    var timestamp = Math.floor(Date.now() / 1000);
-                    var url = host + '/';
-                    var string1 = 'jsapi_ticket=' + jsapi_ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url;
-                    var signature = sha1(string1);
-                    resolve({
-                        appId: appId,
-                        timestamp: timestamp,
-                        nonceStr: noncestr,
-                        signature: signature,
-                        jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage']
-                    });
-                })
-            })
-        }
-        
-        generateWXJsSdkConfig(function (config) {
-            config.debug = true;
-            wx.config(config);
-        })
-        
-        wx.ready(function () {
-            wx.onMenuShareTimeline({
-                title: title, // 分享标题
-                link: link, // 分享链接
-                imgUrl: imgUrl, // 分享图标
-            });
-            wx.onMenuShareAppMessage({
-                title: title, // 分享标题
-                desc: desc, // 分享描述
-                link: link, // 分享链接
-                imgUrl: imgUrl, // 分享图标
-            });
-        });
-    }
-
-  
-
-</script>
 </html>
