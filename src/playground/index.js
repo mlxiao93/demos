@@ -24,6 +24,9 @@ new Vue({
           content: `第${earliestId - i}条消息，hahaha`
         });
       }
+    },
+    focus() {
+      this.$refs.list.scrollTop = this.$refs.list.scrollHeight;
     }
   },
   created() {
@@ -37,5 +40,6 @@ new Vue({
   },
   mounted() {
     console.log(this.$refs.input)
+
   }
 });

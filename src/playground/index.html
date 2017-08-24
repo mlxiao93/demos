@@ -16,19 +16,19 @@
 
     <div class="main-area">
 
-      <ul class="message-list">
+      <ul class="message-list" ref="list">
         <li v-for="message in messages" :key="message.id">
           {{message.content}}
         </li>
-        <div class="load-more">
+        <li class="load-more">
           <button @click="loadMore">加载历史消息</button>
-        </div>
+        </li>
       </ul>
     </div>
 
 
     <div class="text-area">
-      <textarea ref="textarea"></textarea>
+      <textarea ref="textarea" @focus="focus"></textarea>
       <button @click="addOne">发送新消息</button>
     </div>
   </div>
