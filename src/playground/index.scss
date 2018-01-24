@@ -1,6 +1,46 @@
 body {
   margin: 0;
 }
+<<<<<<< HEAD
 p {
 
 }
+=======
+
+#app {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  ul.message-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column-reverse;
+    border: 1px solid red;
+    overflow: auto;
+    li {
+      flex-shrink: 0;
+    }
+    .load-more {
+      height: 2em;
+      button {
+        width: 100%;
+      }
+    }
+  }
+}
+.text-area {
+  display: flex;
+  textarea {
+    resize: none;
+    flex: 1;
+  }
+}
+>>>>>>> 7004152845672f14972eb401886fdbd3a6f1fcb5
