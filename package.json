@@ -8,9 +8,7 @@
     "dist": "cross-env NODE_ENV=prod webpack",
     "babel-node": "babel-node",
     "publish": "npm run dist && node publish.js",
-    "serve:dist": "npm run dist && nodemon --exec npm run babel-node -- ./dist-server.js",
-    "dev:server": "cross-env NODE_ENV=dev nodemon --exec npm run babel-node -- ./server/index.js",
-    "prod:server": "cross-env NODE_ENV=prod nodemon --exec npm run babel-node -- ./server/index.js"
+    "serve:dist": "npm run dist && nodemon --exec npm run babel-node -- ./dist-server.js"
   },
   "keywords": [],
   "author": "",
